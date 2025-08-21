@@ -1,0 +1,1 @@
+<?phprequire_once("../config/pdofunctions.php"); $converter = new Encryption;$data = $converter->encode($_POST["url"]);closeConnection($data, '200');exit;?>
