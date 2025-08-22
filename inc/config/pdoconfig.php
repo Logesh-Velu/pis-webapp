@@ -5,7 +5,7 @@ if(in_array($_SERVER['REMOTE_ADDR'], $whitelist)){
     define('DB_USERNAME', 'root');
 	define('DB_PASSWORD', '');
 	define('DB_HOST', 'localhost');
-	define('DB_NAME', 'digitos4_pis');
+	define('DB_NAME', 'aimm_pis');
 }else{
     //server
     define('DB_USERNAME', 'digitos4_demousr');

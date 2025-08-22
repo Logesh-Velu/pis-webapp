@@ -369,6 +369,7 @@ if ($_REQUEST['token'] != ""){
 						
 					</div>
 				</div>
+				                
 				<?php require_once("inc/right-sidebar.php"); ?>
             </div>
         </div>
