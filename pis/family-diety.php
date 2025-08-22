@@ -192,7 +192,7 @@ if ($_REQUEST['token'] != ""){
 											<td align="center"><?php echo $lastModified;?></td>
 											<td class="text-nowrap text-center">
 												<a href="family-diety.php?token=<?php echo $token; ?>" data-toggle="tooltip" data-original-title="Edit"> <i class="ti-pencil-alt text-info m-r-10"></i> </a>
-												<a href="javascript:;" class="delete" rel="<?php echo $obj->fd_id; ?>" data-toggle="tooltip" data-original-title="Remove"> <i class="ti-trash m-r-10"></i> </a>
+												<a href="javascript:;" class="delete" rel="<?php echo $obj->fd_id; ?>" data-toggle="tooltip" data-original-title="Delete Permanently"> <i class="ti-trash text-danger m-r-10"></i> </a>
 											</td>
 										</tr>	
 									<?php 
@@ -280,26 +280,43 @@ if ($_REQUEST['token'] != ""){
 			var id = $(this).attr('rel');
 			var sTable = 'tbl_family_diety';
 			var sWhere = 'fd_id';
-			var sStatus = 'status';
-			var sValue = '0';
 			var nRow = $(this).parents('tr');			
-			if ( confirm( "Are you sure, confirm to remove this family deity?" ) ) {	
+			if ( confirm( "Are you sure you want to PERMANENTLY DELETE this family deity? This action cannot be undone!" ) ) {	
 				$.ajax({
 					type:'post',
 					url:'inc/cisajax/jquery-delete-records.php',
-					data: {"id":id,"sTable":sTable,"sWhere":sWhere,"sStatus":sStatus,"sValue":sValue},
+					data: {"id":id,"sTable":sTable,"sWhere":sWhere},
 					beforeSend:function(){
-					},
-					complete:function(){
-						$.toast({heading: 'Success!',text:'Family deity details successfully removed..!',position:'top-right',loaderBg:'#ff6849',icon:'success',hideAfter:2000,stack:6});
+						// Show loading state
+						$(this).attr('disabled', true);
 					},
 					success:function(result){
-						//$('#scTable').DataTable().row(nRow).remove().draw();
-						nRow.hide();
+						if(result == 'success') {
+							$.toast({heading: 'Success!',text:'Family deity has been permanently deleted!',position:'top-right',loaderBg:'#ff6849',icon:'success',hideAfter:2000,stack:6});
+							// Remove the row from the table
+							nRow.fadeOut(400, function() {
+								$(this).remove();
+								// Redraw the DataTable
+								myTable.draw();
+							});
+						} else if(result == 'no_changes') {
+							$.toast({heading: 'Info!',text:'No changes made. Record may not exist.',position:'top-right',loaderBg:'#ed1c24',icon:'info',hideAfter:2000,stack:6});
+						} else {
+							$.toast({heading: 'Error!',text:'Error deleting family deity: ' + result,position:'top-right',loaderBg:'#ed1c24',icon:'error',hideAfter:3000,stack:6});
+						}
+					},
+					error:function(xhr, status, error){
+						$.toast({heading: 'Error!',text:'Failed to delete family deity. Please try again.',position:'top-right',loaderBg:'#ed1c24',icon:'error',hideAfter:3000,stack:6});
+					},
+					complete:function(){
+						// Re-enable button
+						$(this).removeAttr('disabled');
 					}
 				});				
 			}
 		});
+		
+
 		
 	});
 	
