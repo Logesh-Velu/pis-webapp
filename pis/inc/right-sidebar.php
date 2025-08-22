@@ -1,0 +1,1 @@
+<div class="right-sidebar">	<div class="slimscrollright">		<div class="rpanel-title"> QUICK LINK <span><i class="ti-close right-side-toggle"></i></span> </div>		<div class="r-panel-body">					</div>	</div></div>
