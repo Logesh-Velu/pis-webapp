@@ -175,7 +175,7 @@ if ($_REQUEST['token'] != ""){
 								</thead>
 								<tbody>
 								<?php
-								$pdoQry="SELECT * FROM tbl_family_diety WHERE status = 1 ORDER BY fd_name";
+								$pdoQry="SELECT * FROM tbl_family_diety ORDER BY fd_name";
 								$pdoRes = $conn->query($pdoQry);	
 								if ($pdoRes->rowCount() > 0){
 									$Sno=1;
