@@ -1,5 +1,5 @@
 <?php
-ob_start();
+ob_start();// git check
 session_start();
 error_reporting(0);
 require_once("inc/userclasses.php");
