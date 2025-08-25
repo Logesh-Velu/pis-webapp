@@ -4,7 +4,7 @@ session_start();
 error_reporting(0);
 require_once("inc/userclasses.php");
 
-    // Handle form submission
+    // Handle form submission  member form
     if(isset($_POST['SAVE'])){
         try {
             $_POST['memb_code'] = strtoupper($_POST['memb_code']);
