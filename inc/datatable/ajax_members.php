@@ -31,7 +31,7 @@ $converter = new Encryption;
 			intval( $_GET['iDisplayLength'] );
 	}
 	/* Ordering */
-	$aColumns = array('a.memb_id','a.memb_group','a.memb_code','a.memb_fname','a.memb_lname','a.memb_mobile','b.city_name','a.memb_status');
+	$aColumns = array('a.memb_id','a.memb_code','a.memb_fname','a.memb_initial','a.memb_mobile','b.city_name','a.memb_status');
 	$sOrder = "";
 	if ( isset( $_GET['iSortCol_0'] ) ){
 		$sOrder = "ORDER BY  ";
@@ -48,10 +48,10 @@ $converter = new Encryption;
 	}
 	$keyword = preg_replace('/[^A-Za-z0-9 \x{0080}-\x{FFFF}]+/u', '', $_GET['sSearch']);
 	$sQuery = "
-		SELECT DISTINCT a.memb_id,a.memb_group,a.memb_code,a.memb_fname,a.memb_initial,a.memb_lname,a.memb_email,a.memb_mobile,b.city_name
+		SELECT DISTINCT a.memb_id,a.memb_code,a.memb_fname,a.memb_initial,a.memb_email,a.memb_mobile,b.city_name
 		FROM tbl_members a 
-		INNER JOIN mst_city b ON a.memb_city = b.city_id
-		WHERE ".$sWhere." AND (a.memb_code LIKE '%".$keyword."%' OR a.memb_fname LIKE '%".$keyword."%' OR a.memb_lname LIKE '%".$keyword."%' OR a.memb_email LIKE '%".$keyword."%' OR a.memb_mobile LIKE '%".$keyword."%' OR b.city_name LIKE '%".$keyword."%' OR CONCAT('G',a.memb_group) LIKE '%".$keyword."%' )
+		LEFT JOIN mst_city b ON a.memb_city = b.city_id
+		WHERE ".$sWhere." AND (a.memb_code LIKE '%".$keyword."%' OR a.memb_fname LIKE '%".$keyword."%' OR a.memb_initial LIKE '%".$keyword."%' OR a.memb_email LIKE '%".$keyword."%' OR a.memb_mobile LIKE '%".$keyword."%' OR b.city_name LIKE '%".$keyword."%' )
 		$sOrder
 		$sLimit
 		";		
@@ -64,12 +64,11 @@ $converter = new Encryption;
 			$del_link = '<a href="javascript:;" class="delete" rel="'.$obj->memb_id.'" data-toggle="tooltip" data-original-title="Remove"> <i class="ti-trash m-r-10"></i> </a>';	
 			$actions = '<a href="members-add.php?token='.$token.'" data-toggle="tooltip" data-original-title="Edit"> <i class="ti-pencil-alt text-info m-r-5"></i> </a>
 						'.$del_link.'';
-            $records["aaData"][] = array(
+            			$records["aaData"][] = array(
 			  $Sno,
-			  'G'.$obj->memb_group,
 			  $obj->memb_code,
-			  $obj->memb_fname.'. '.$obj->memb_initial,
-			  $obj->memb_lname,
+			  $obj->memb_fname,
+			  $obj->memb_initial,
 			  $obj->memb_mobile,
 			  $obj->city_name,
 			  $actions,

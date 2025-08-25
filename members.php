@@ -67,12 +67,11 @@ require_once("inc/userclasses.php");
 								<thead>
 									<tr>
 										<th width="5%">#</th>
-										<th width="5%">Grp</th>
-										<th width="6%">ID</th>
+										<th width="15%">Member Code</th>
 										<th width="25%">First Name</th>
-										<th width="25%">Last Name</th>
-										<th width="12%">Mobile</th>
-										<th width="12%">City Name</th>
+										<th width="15%">Initial</th>
+										<th width="15%">Mobile</th>
+										<th width="15%">City Name</th>
 										<th width="10%">Action</th>
 									</tr>
 								</thead>
@@ -127,7 +126,7 @@ require_once("inc/userclasses.php");
 				"oPaginate": { "sFirst": "First", "sLast": "Last", "sNext": ">", "sPrevious": "<" }
 			},
 			"aoColumnDefs": [
-			  { "bSortable": false, "aTargets": [0,1,7] },
+			  { "bSortable": false, "aTargets": [0,6] },
 			  { "sDefaultContent": '', aTargets: ['_all'] }
 			],
 			"aaSorting": [],
